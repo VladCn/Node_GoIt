@@ -9,8 +9,9 @@ function listContacts() {
        if (error) {
            return console.error(error.message)
        }
+       const parsedData = JSON.parse(data);
 
-       console.log(data)
+       console.table(parsedData, Object.keys(parsedData[0]))
 
    })
 }
@@ -35,7 +36,8 @@ async function removeContact(contactId) {
         await writeFileAsync(contactsPath, JSON.stringify(data), "utf-8");
 
         const newData = await readFileAsync(contactsPath, 'utf8');
-        console.log(JSON.parse(newData));
+        const parsedData = JSON.parse(newData);
+        console.table(parsedData, Object.keys(parsedData[0]))
 
 
     } catch (error) {
@@ -51,6 +53,11 @@ async function addContact(name, email, phone) {
         const data = [...parsedFile, {id: (Math.random()*100).toFixed(0), name, email, phone}];
 
         await writeFileAsync(contactsPath, JSON.stringify(data))
+
+        const newData = await readFileAsync(contactsPath, 'utf8');
+        const parsedData = JSON.parse(newData);
+        console.table(parsedData, Object.keys(parsedData[0]))
+
     } catch(error) {
         console.log(error.message)
     }
