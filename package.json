@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/VladCn/Node_GoIt#readme",
   "devDependencies": {
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.16",
+    "uuid": "^8.3.2"
   },
   "dependencies": {
     "yargs": "^17.5.1"

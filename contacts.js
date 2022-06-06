@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { readFile: readFileAsync, writeFile: writeFileAsync } = require('fs').promises;
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
 const contactsPath = path.resolve('db/contacts.json');
 
@@ -30,7 +31,7 @@ async function removeContact(contactId) {
     try {
         const fileData = await readFileAsync(contactsPath, 'utf8');
 
-        const parsedFile = JSON.parse(fileData.toString());
+        const parsedFile = JSON.parse(fileData);
         const data = parsedFile.filter(({id}) => id !== String(contactId));
 
         await writeFileAsync(contactsPath, JSON.stringify(data), "utf-8");
@@ -50,7 +51,7 @@ async function addContact(name, email, phone) {
         const fileData = await readFileAsync(contactsPath, 'utf8');
 
         const parsedFile = JSON.parse(fileData.toString());
-        const data = [...parsedFile, {id: (Math.random()*100).toFixed(0), name, email, phone}];
+        const data = [...parsedFile, {id: uuidv4(), name, email, phone}];
 
         await writeFileAsync(contactsPath, JSON.stringify(data))
 
